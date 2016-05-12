@@ -3,7 +3,7 @@
 
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://raw.githubusercontent.com/PFei-He/PFKitObjC/master/LICENSE)
 [![Support](https://img.shields.io/badge/support-iOS%207%2B%20-blue.svg?style=flat)](https://www.apple.com/nl/ios/)
-[![Cocoapods Compatible](https://img.shields.io/cocoapods/v/PFObjC.svg)](https://img.shields.io/cocoapods/v/PFKitObjC.svg)
+[![Cocoapods Compatible](https://img.shields.io/cocoapods/v/PFKitObjC.svg)](https://img.shields.io/cocoapods/v/PFKitObjC.svg)
 
 简易的iOS组件包。A simple iOS components.
 
