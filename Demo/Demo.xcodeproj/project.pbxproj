@@ -19,6 +19,8 @@
 		4565F5CE1CE45C0A00AA978E /* PFModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4565F5CB1CE45C0A00AA978E /* PFModel.m */; };
 		4565F5D71CE45D2C00AA978E /* PFQRCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4565F5D61CE45D2C00AA978E /* PFQRCode.m */; };
 		4565F5DD1CE45E9C00AA978E /* UIView+PFKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 4565F5DC1CE45E9C00AA978E /* UIView+PFKit.m */; };
+		4565F6191CE486D700AA978E /* NSString+PFKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 4565F6181CE486D700AA978E /* NSString+PFKit.m */; };
+		4565F61C1CE486E800AA978E /* PFScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 4565F61B1CE486E800AA978E /* PFScanner.m */; };
 		456788261BFC97200034EB18 /* person.json in Resources */ = {isa = PBXBuildFile; fileRef = 456788251BFC97200034EB18 /* person.json */; };
 		457B57931C006AE50033B62A /* person.xml in Resources */ = {isa = PBXBuildFile; fileRef = 457B57921C006AE50033B62A /* person.xml */; };
 /* End PBXBuildFile section */
@@ -48,6 +50,10 @@
 		4565F5D61CE45D2C00AA978E /* PFQRCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFQRCode.m; sourceTree = "<group>"; };
 		4565F5DB1CE45E9C00AA978E /* UIView+PFKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+PFKit.h"; sourceTree = "<group>"; };
 		4565F5DC1CE45E9C00AA978E /* UIView+PFKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+PFKit.m"; sourceTree = "<group>"; };
+		4565F6171CE486D700AA978E /* NSString+PFKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PFKit.h"; sourceTree = "<group>"; };
+		4565F6181CE486D700AA978E /* NSString+PFKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+PFKit.m"; sourceTree = "<group>"; };
+		4565F61A1CE486E800AA978E /* PFScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFScanner.h; sourceTree = "<group>"; };
+		4565F61B1CE486E800AA978E /* PFScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFScanner.m; sourceTree = "<group>"; };
 		456788251BFC97200034EB18 /* person.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = person.json; sourceTree = "<group>"; };
 		457B57921C006AE50033B62A /* person.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = person.xml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -169,6 +175,8 @@
 				4565F5CB1CE45C0A00AA978E /* PFModel.m */,
 				4565F5D51CE45D2C00AA978E /* PFQRCode.h */,
 				4565F5D61CE45D2C00AA978E /* PFQRCode.m */,
+				4565F61A1CE486E800AA978E /* PFScanner.h */,
+				4565F61B1CE486E800AA978E /* PFScanner.m */,
 			);
 			name = Framework;
 			sourceTree = "<group>";
@@ -185,6 +193,8 @@
 		4565F5D11CE45C1F00AA978E /* Catagory */ = {
 			isa = PBXGroup;
 			children = (
+				4565F6171CE486D700AA978E /* NSString+PFKit.h */,
+				4565F6181CE486D700AA978E /* NSString+PFKit.m */,
 				4565F5DB1CE45E9C00AA978E /* UIView+PFKit.h */,
 				4565F5DC1CE45E9C00AA978E /* UIView+PFKit.m */,
 			);
@@ -274,11 +284,13 @@
 			files = (
 				4565F5CE1CE45C0A00AA978E /* PFModel.m in Sources */,
 				4565F5DD1CE45E9C00AA978E /* UIView+PFKit.m in Sources */,
+				4565F6191CE486D700AA978E /* NSString+PFKit.m in Sources */,
 				4565F5D71CE45D2C00AA978E /* PFQRCode.m in Sources */,
 				456225BC1BF579F9008202A7 /* AppDelegate.m in Sources */,
 				4565F5CC1CE45C0A00AA978E /* PFDebug.m in Sources */,
 				456225DC1BF57A4A008202A7 /* RootViewController.m in Sources */,
 				4565F5CD1CE45C0A00AA978E /* PFFile.m in Sources */,
+				4565F61C1CE486E800AA978E /* PFScanner.m in Sources */,
 				456225B91BF579F9008202A7 /* main.m in Sources */,
 				456225E11BF57B4E008202A7 /* RootModel.m in Sources */,
 			);
