@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<person>
+    <name>张三</name>
+    <age>18</age>
+    <sex>男</sex>
+    <phone>13322332233</phone>
+    <address>
+        <one>广州</one>
+        <two>江门</two>
+    </address>
+    <height>175</height>
+    <weight>70</weight>
+    <food>
+        <fruit>
+            <fruit>
+                <fruit>apple</fruit>
+                <fruit>orange</fruit>
+            </fruit>
+        </fruit>
+        <meat>chicken</meat>
+    </food>
+    <sport>
+        <one>football</one>
+        <two>basketball</two>
+    </sport>
+    <code>https://github.com/PFei-He/PFObjC</code>
+</person>

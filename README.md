@@ -13,11 +13,19 @@
 
 说明 Detail
 ---
+#### Catagory
+* `UIView+PFKit`        - UIView类目
+
+#### Debug
+* `PFDebug`             - 调试
+
 #### Framework
+* `PFFile`              - 实现文件生成和读写功能
 * `PFModel`             - 数据模型基类
+* `PFQRCode`            - 利用AVFoundation框架生成二维码
  
 #### Other
-* `PFkit`               - 类库接口与调试
+* `PFKit`               - 类库接口
 
 安装 Install
 --- 

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "group:PFKit"
+      name = "PFKit">
+      <Group
+         location = "container:"
+         name = "Catagory">
+         <FileRef
+            location = "group:PFKit/UIView+PFKit.h">
+         </FileRef>
+         <FileRef
+            location = "group:PFKit/UIView+PFKit.m">
+         </FileRef>
+      </Group>
+      <Group
+         location = "container:"
+         name = "Debug">
+         <FileRef
+            location = "group:PFKit/PFDebug.h">
+         </FileRef>
+         <FileRef
+            location = "group:PFKit/PFDebug.m">
+         </FileRef>
+      </Group>
+      <Group
+         location = "container:"
+         name = "Framework">
+         <FileRef
+            location = "group:PFKit/PFFile.h">
+         </FileRef>
+         <FileRef
+            location = "group:PFKit/PFFile.m">
+         </FileRef>
+         <FileRef
+            location = "group:PFKit/PFModel.h">
+         </FileRef>
+         <FileRef
+            location = "group:PFKit/PFModel.m">
+         </FileRef>
+         <FileRef
+            location = "group:PFKit/PFQRCode.h">
+         </FileRef>
+         <FileRef
+            location = "group:PFKit/PFQRCode.m">
+         </FileRef>
+      </Group>
+      <FileRef
+         location = "group:PFKit.h">
+      </FileRef>
+   </Group>
+   <FileRef
+      location = "group:Demo/Demo.xcodeproj">
+   </FileRef>
+</Workspace>
