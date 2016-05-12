@@ -31,6 +31,7 @@
 #ifndef PFKit_h
 #define PFKit_h
 
+#import "NSString+PFKit.h"
 #import "UIView+PFKit.h"
 
 #import "PFDebug.h"
@@ -38,5 +39,6 @@
 #import "PFFile.h"
 #import "PFModel.h"
 #import "PFQRCode.h"
+#import "PFScanner.h"
 
 #endif /* PFKit_h */

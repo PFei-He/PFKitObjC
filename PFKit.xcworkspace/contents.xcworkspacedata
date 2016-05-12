@@ -8,6 +8,12 @@
          location = "container:"
          name = "Catagory">
          <FileRef
+            location = "group:PFKit/NSString+PFKit.h">
+         </FileRef>
+         <FileRef
+            location = "group:PFKit/NSString+PFKit.m">
+         </FileRef>
+         <FileRef
             location = "group:PFKit/UIView+PFKit.h">
          </FileRef>
          <FileRef
@@ -44,6 +50,12 @@
          </FileRef>
          <FileRef
             location = "group:PFKit/PFQRCode.m">
+         </FileRef>
+         <FileRef
+            location = "group:PFKit/PFScanner.h">
+         </FileRef>
+         <FileRef
+            location = "group:PFKit/PFScanner.m">
          </FileRef>
       </Group>
       <FileRef

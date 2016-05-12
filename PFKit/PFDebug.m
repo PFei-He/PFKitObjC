@@ -32,4 +32,10 @@
 
 @implementation PFDebug
 
+//版本号
++ (NSString *)debugVersion
+{
+    return @"[ PFKit ][ INFO ] current version: 0.0.2";
+}
+
 @end

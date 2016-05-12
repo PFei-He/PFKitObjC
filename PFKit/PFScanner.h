@@ -1,5 +1,5 @@
 //
-//  PFDebug.h
+//  PFScanner.h
 //  PFKit
 //
 //  Created by PFei_He on 16/5/12.
@@ -25,19 +25,39 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //
-//  ***** 调试 *****
+//  ***** 扫描器 *****
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@interface PFDebug : NSObject
+@class PFScanner;
+
+@protocol PFScannerDelegate <NSObject>
 
 /**
- *  @brief 版本号
+ *  @brief 扫描完成
  *  @note 无
- *  @param 无
- *  @return 版本号
+ *  @param string: 扫描结果转换成的字符串
+ *  @return 无
  */
-+ (NSString *)debugVersion;
+- (void)scanner:(PFScanner *)scanner captureCompletedWithString:(NSString *)string;
+
+@end
+
+@interface PFScanner : NSObject
+
+/* 详见AVCaptureOutput类的rectOfInterest */
+///扫描器的工作区域
+@property (assign, nonatomic)   CGRect                  rectOfInterest;
+///代理
+@property (weak, nonatomic)     id<PFScannerDelegate>   delegate;
+
+/**
+ *  @brief 创建扫描器
+ *  @note 无
+ *  @param view: 添加扫描器的视图
+ *  @return 无
+ */
+- (void)createInView:(UIView *)view;
 
 @end

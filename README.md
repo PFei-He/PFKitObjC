@@ -9,11 +9,12 @@
 
 版本 Version
 ---
-0.0.1
+0.0.2
 
 说明 Detail
 ---
 #### Catagory
+* `NSString+PFKit`      - NSString类目
 * `UIView+PFKit`        - UIView类目
 
 #### Debug
@@ -23,6 +24,7 @@
 * `PFFile`              - 实现文件生成和读写功能
 * `PFModel`             - 数据模型基类
 * `PFQRCode`            - 利用AVFoundation框架生成二维码
+* `PFScanner`           - 扫描器
  
 #### Other
 * `PFKit`               - 类库接口
@@ -38,7 +40,7 @@
 ```
 target 'YourTarget' do
     platform:ios, '7.0'
-    pod 'PFKitObjC', '~> 0.0.1'
+    pod 'PFKitObjC', '~> 0.0.2'
 end
 ```
 
