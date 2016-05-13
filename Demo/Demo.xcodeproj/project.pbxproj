@@ -26,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		453B78721CE5A706008332BD /* PFConfigure.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFConfigure.h; sourceTree = "<group>"; };
 		456225B41BF579F9008202A7 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		456225B81BF579F9008202A7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		456225BA1BF579F9008202A7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -169,6 +170,7 @@
 		4565F5CF1CE45C0F00AA978E /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				453B78721CE5A706008332BD /* PFConfigure.h */,
 				4565F5C71CE45C0A00AA978E /* PFFile.h */,
 				4565F5C81CE45C0A00AA978E /* PFFile.m */,
 				4565F5CA1CE45C0A00AA978E /* PFModel.h */,

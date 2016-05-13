@@ -29,13 +29,26 @@
 //
 
 #import "PFDebug.h"
+#import "PFFile.h"
+#import "PFModel.h"
 
 @implementation PFDebug
 
 //版本号
-+ (NSString *)debugVersion
++ (void)debugVersion
 {
-    return @"[ PFKit ][ INFO ] current version: 0.0.2";
+    NSLog(@"[ PFKit ][ INFO ] current version: 0.0.3");
+    NSLog(@"[ PFKit ][ INFO ] programming language: Objective-C");
+    NSLog(@"[ PFKit ][ INFO ] open source license: MIT");
+    NSLog(@"[ PFKit ][ INFO ] join me: https://github.com/PFei-He/PFKitObjC");
+    NSLog(@"[ PFKit ][ INFO ] THANK YOU FOR USING !!");
+}
+
+//调试模式
++ (void)debugMode:(BOOL)openOrNot
+{
+    [PFFile debugMode:openOrNot];
+    [PFModel debugMode:openOrNot];
 }
 
 @end

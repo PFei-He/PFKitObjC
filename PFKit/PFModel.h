@@ -86,4 +86,12 @@
  */
 - (NSDictionary *)createJSON;
 
+/**
+ *  @brief 调试模式
+ *  @note 无
+ *  @param openOrNot: 是否打开调试模式
+ *  @return 无
+ */
++ (void)debugMode:(BOOL)openOrNot;
+
 @end

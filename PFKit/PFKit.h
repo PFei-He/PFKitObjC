@@ -36,6 +36,7 @@
 
 #import "PFDebug.h"
 
+#import "PFConfigure.h"
 #import "PFFile.h"
 #import "PFModel.h"
 #import "PFQRCode.h"

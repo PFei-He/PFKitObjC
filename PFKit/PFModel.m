@@ -31,6 +31,9 @@
 #import "PFModel.h"
 #import <objc/runtime.h>
 
+///调试模式
+static BOOL DEBUG_MODE = NO;
+
 @interface PFModel () <NSXMLParserDelegate>
 
 ///节点
@@ -103,7 +106,10 @@
 {
     //判断数据类型
     if (![JSON isKindOfClass:[NSDictionary class]] && ![JSON isKindOfClass:[NSData class]]) {
-        NSLog(@"[ %@ ][ ERROR ] %@", [self classForCoder], @"The JSON object must be type of dictionary or data");
+        if (DEBUG_MODE) {
+            NSLog(@"[ PFKit ][ ERROR ] The JSON object must be type of dictionary or data.");
+            NSLog(@"[ PFKit ][ ERROR ] class: %@", [self classForCoder]);
+        }
         return;
     } else if ([JSON isKindOfClass:[NSData class]]) {
         JSON = [NSJSONSerialization JSONObjectWithData:JSON options:NSJSONReadingAllowFragments error:nil];
@@ -124,7 +130,10 @@
     
     //判断数据类型
     if (![XML isKindOfClass:[NSString class]] && ![XML isKindOfClass:[NSData class]]) {
-        NSLog(@"[ %@ ][ ERROR ] %@", [self classForCoder], @"The XML object must be type of string or data");
+        if (DEBUG_MODE) {
+            NSLog(@"[ PFKit ][ ERROR ] The XML object must be type of string or data.");
+            NSLog(@"[ PFKit ][ ERROR ] class: %@", [self classForCoder]);
+        }
         return;
     } else if ([XML isKindOfClass:[NSString class]]) {
         XML = [XML dataUsingEncoding:NSUTF8StringEncoding];
@@ -135,8 +144,9 @@
     parser.delegate = self;
     if ([parser parse]) {//解析XML
         self.JSON = self.array[0];
-    } else {
-        NSLog(@"[ %@ ][ ERROR ] %@", [self classForCoder], @"XML data can't be parse");
+    } else if (DEBUG_MODE) {
+        NSLog(@"[ PFKit ][ ERROR ] XML data can't be parse.");
+        NSLog(@"[ PFKit ][ ERROR ] class: %@", [self classForCoder]);
     }
 }
 
@@ -145,7 +155,13 @@
 //获取未被声明的键值
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key
 {
-    NSLog(@"[ %@ ][ ERROR ] UndefinedKey: %@, Type: %@, Value: %@", [self classForCoder], key, [value classForCoder], value);
+    if (DEBUG_MODE) {
+        NSLog(@"[ PFKit ][ ERROR ] found undefined key when parsing.");
+        NSLog(@"[ PFKit ][ ERROR ] class: %@", [self classForCoder]);
+        NSLog(@"[ PFKit ][ ERROR ] key: %@", key);
+        NSLog(@"[ PFKit ][ ERROR ] type: %@", [value classForCoder]);
+        NSLog(@"[ PFKit ][ ERROR ] value: %@", value);
+    }
 }
 
 //创建JSON（将键值转化为字典）
@@ -180,6 +196,12 @@
     
     //返回JSON对象
     return JSON;
+}
+
+//调试模式
++ (void)debugMode:(BOOL)openOrNot
+{
+    DEBUG_MODE = openOrNot;
 }
 
 #pragma mark - NSXMLParserDelegate Methods

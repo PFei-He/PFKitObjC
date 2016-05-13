@@ -30,7 +30,12 @@
 
 #import "PFFile.h"
 
+///调试模式
+static BOOL DEBUG_MODE = NO;
+
 @implementation PFFile
+
+#pragma mark - Public Methods
 
 //创建文件
 + (void)createWithName:(NSString *)fileName
@@ -38,7 +43,12 @@
     NSString *path = [PFFile readWithName:fileName directory:@"doucument" type:nil];
     NSFileManager *manager = [NSFileManager defaultManager];
     if (![manager fileExistsAtPath:path]) {//如果文件不存在则创建文件
-        [manager createFileAtPath:path contents:nil attributes:nil];
+        if ([manager createFileAtPath:path contents:nil attributes:nil] && DEBUG_MODE) {
+            NSLog(@"[ PFKit ][ DEBUG ] file created");
+            NSLog(@"[ PFKit ][ DEBUG ] file path: %@", path);
+        }
+    } else if (DEBUG_MODE) {
+        NSLog(@"[ PFKit ][ DEBUG ] file exists");
     }
 }
 
@@ -48,8 +58,13 @@
     NSString *path = [PFFile readWithName:fileName directory:@"doucument" type:nil];
     NSFileManager *manager = [NSFileManager defaultManager];
     if (![manager fileExistsAtPath:path]) {//如果文件不存在则创建文件
-        [manager createFileAtPath:path contents:nil attributes:nil];
-        [PFFile modifyWithName:fileName setParams:params];
+        if ([manager createFileAtPath:path contents:nil attributes:nil] && DEBUG_MODE) {
+            [PFFile modifyWithName:fileName setParams:params];
+            NSLog(@"[ PFKit ][ DEBUG ] file created");
+            NSLog(@"[ PFKit ][ DEBUG ] file path: %@", path);
+        }
+    } else if (DEBUG_MODE) {
+        NSLog(@"[ PFKit ][ DEBUG ] file exists");
     }
 }
 
@@ -103,9 +118,21 @@
     NSString *path = [PFFile readWithName:fileName directory:@"doucument" type:nil];
     NSFileManager *manager = [NSFileManager defaultManager];
     if ([manager fileExistsAtPath:path]) {//如果文件存在则删除文件
-        [manager removeItemAtPath:path error:nil];
+        if ([manager removeItemAtPath:path error:nil] && DEBUG_MODE) {
+            NSLog(@"[ PFKit ][ DEBUG ] file removed");
+        }
+    } else if (DEBUG_MODE) {
+        NSLog(@"[ PFKit ][ DEBUG ] file remove failed");
     }
 }
+
+//调试模式
++ (void)debugMode:(BOOL)openOrNot
+{
+    DEBUG_MODE = openOrNot;
+}
+
+#pragma mark - Private Methods
 
 ///读取资源包文件或沙盒文件
 + (id)readWithName:(NSString *)fileName directory:(NSString *)directory type:(NSString *)type
