@@ -9,7 +9,7 @@
 
 版本 Version
 ---
-0.0.2
+0.0.3
 
 说明 Detail
 ---
@@ -40,7 +40,7 @@
 ```
 target 'YourTarget' do
     platform:ios, '7.0'
-    pod 'PFKitObjC', '~> 0.0.2'
+    pod 'PFKitObjC', '~> 0.0.3'
 end
 ```
 
