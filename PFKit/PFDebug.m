@@ -37,7 +37,7 @@
 //版本号
 + (void)debugVersion
 {
-    NSLog(@"[ PFKit ][ INFO ] current version: 0.0.3");
+    NSLog(@"[ PFKit ][ INFO ] current version: 0.0.4");
     NSLog(@"[ PFKit ][ INFO ] programming language: Objective-C");
     NSLog(@"[ PFKit ][ INFO ] open source license: MIT");
     NSLog(@"[ PFKit ][ INFO ] join me: https://github.com/PFei-He/PFKitObjC");

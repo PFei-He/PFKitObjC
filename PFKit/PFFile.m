@@ -43,12 +43,15 @@ static BOOL DEBUG_MODE = NO;
     NSString *path = [PFFile readWithName:fileName directory:@"doucument" type:nil];
     NSFileManager *manager = [NSFileManager defaultManager];
     if (![manager fileExistsAtPath:path]) {//如果文件不存在则创建文件
-        if ([manager createFileAtPath:path contents:nil attributes:nil] && DEBUG_MODE) {
-            NSLog(@"[ PFKit ][ DEBUG ] file created");
-            NSLog(@"[ PFKit ][ DEBUG ] file path: %@", path);
+        BOOL result = [manager createFileAtPath:path contents:nil attributes:nil];
+        if (result && DEBUG_MODE) {
+            NSLog(@"[ PFKit ][ DEBUG ] File created.");
+            NSLog(@"[ PFKit ][ DEBUG ] File path: %@.", path);
+        } else if (DEBUG_MODE) {
+            NSLog(@"[ PFKit ][ ERROR ] File create failed.");
         }
     } else if (DEBUG_MODE) {
-        NSLog(@"[ PFKit ][ DEBUG ] file exists");
+        NSLog(@"[ PFKit ][ ERROR ] File exists.");
     }
 }
 
@@ -58,13 +61,16 @@ static BOOL DEBUG_MODE = NO;
     NSString *path = [PFFile readWithName:fileName directory:@"doucument" type:nil];
     NSFileManager *manager = [NSFileManager defaultManager];
     if (![manager fileExistsAtPath:path]) {//如果文件不存在则创建文件
-        if ([manager createFileAtPath:path contents:nil attributes:nil] && DEBUG_MODE) {
-            [PFFile modifyWithName:fileName setParams:params];
-            NSLog(@"[ PFKit ][ DEBUG ] file created");
-            NSLog(@"[ PFKit ][ DEBUG ] file path: %@", path);
+        BOOL result = [manager createFileAtPath:path contents:nil attributes:nil];
+        [PFFile modifyWithName:fileName setParams:params];
+        if (result && DEBUG_MODE) {
+            NSLog(@"[ PFKit ][ DEBUG ] File created.");
+            NSLog(@"[ PFKit ][ DEBUG ] File path: %@.", path);
+        } else if (DEBUG_MODE) {
+            NSLog(@"[ PFKit ][ ERROR ] File create failed.");
         }
     } else if (DEBUG_MODE) {
-        NSLog(@"[ PFKit ][ DEBUG ] file exists");
+        NSLog(@"[ PFKit ][ ERROR ] File exists.");
     }
 }
 
@@ -118,11 +124,14 @@ static BOOL DEBUG_MODE = NO;
     NSString *path = [PFFile readWithName:fileName directory:@"doucument" type:nil];
     NSFileManager *manager = [NSFileManager defaultManager];
     if ([manager fileExistsAtPath:path]) {//如果文件存在则删除文件
-        if ([manager removeItemAtPath:path error:nil] && DEBUG_MODE) {
-            NSLog(@"[ PFKit ][ DEBUG ] file removed");
+        BOOL result = [manager removeItemAtPath:path error:nil];
+        if (result && DEBUG_MODE) {
+            NSLog(@"[ PFKit ][ DEBUG ] File removed.");
+        } else if (DEBUG_MODE) {
+            NSLog(@"[ PFKit ][ ERROR ] File remove failed.");
         }
     } else if (DEBUG_MODE) {
-        NSLog(@"[ PFKit ][ DEBUG ] file remove failed");
+        NSLog(@"[ PFKit ][ ERROR ] File does not exist.");
     }
 }
 
