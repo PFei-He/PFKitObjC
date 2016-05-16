@@ -53,10 +53,8 @@ end
 
 Swift
 ---
-`PFKit`提供了`Swift`的版本以便使用。`PFKit`also provides`Swift`version. 
-```
+`PFKit`提供了`Swift`的版本以便使用。`PFKit`also provides`Swift`version. <br>
 [PFKitSwift](https://github.com/PFei-He/PFKitSwift)
-```
  
 许可证 LICENSE
 ---
