@@ -32,6 +32,8 @@
 
 ///调试模式
 static BOOL DEBUG_MODE = NO;
+///调试目标
+static NSString *DEBUG_TARGET = @"";
 
 @implementation PFFile
 
@@ -45,13 +47,13 @@ static BOOL DEBUG_MODE = NO;
     if (![manager fileExistsAtPath:path]) {//如果文件不存在则创建文件
         BOOL result = [manager createFileAtPath:path contents:nil attributes:nil];
         if (result && DEBUG_MODE) {
-            NSLog(@"[ PFKit ][ DEBUG ] File created.");
-            NSLog(@"[ PFKit ][ DEBUG ] File path: %@.", path);
+            NSLog(@"[ %@ ][ DEBUG ] File created.", DEBUG_TARGET);
+            NSLog(@"[ %@ ][ DEBUG ] File path: %@.", DEBUG_TARGET, path);
         } else if (DEBUG_MODE) {
-            NSLog(@"[ PFKit ][ ERROR ] File create failed.");
+            NSLog(@"[ %@ ][ ERROR ] File create failed.", DEBUG_TARGET);
         }
     } else if (DEBUG_MODE) {
-        NSLog(@"[ PFKit ][ ERROR ] File exists.");
+        NSLog(@"[ %@ ][ ERROR ] File exists.", DEBUG_TARGET);
     }
 }
 
@@ -64,13 +66,13 @@ static BOOL DEBUG_MODE = NO;
         BOOL result = [manager createFileAtPath:path contents:nil attributes:nil];
         [PFFile modifyWithName:fileName setParams:params];
         if (result && DEBUG_MODE) {
-            NSLog(@"[ PFKit ][ DEBUG ] File created.");
-            NSLog(@"[ PFKit ][ DEBUG ] File path: %@.", path);
+            NSLog(@"[ %@ ][ DEBUG ] File created.", DEBUG_TARGET);
+            NSLog(@"[ %@ ][ DEBUG ] File path: %@.", DEBUG_TARGET, path);
         } else if (DEBUG_MODE) {
-            NSLog(@"[ PFKit ][ ERROR ] File create failed.");
+            NSLog(@"[ %@ ][ ERROR ] File create failed.", DEBUG_TARGET);
         }
     } else if (DEBUG_MODE) {
-        NSLog(@"[ PFKit ][ ERROR ] File exists.");
+        NSLog(@"[ %@ ][ ERROR ] File exists.", DEBUG_TARGET);
     }
 }
 
@@ -126,19 +128,20 @@ static BOOL DEBUG_MODE = NO;
     if ([manager fileExistsAtPath:path]) {//如果文件存在则删除文件
         BOOL result = [manager removeItemAtPath:path error:nil];
         if (result && DEBUG_MODE) {
-            NSLog(@"[ PFKit ][ DEBUG ] File removed.");
+            NSLog(@"[ %@ ][ DEBUG ] File removed.", DEBUG_TARGET);
         } else if (DEBUG_MODE) {
-            NSLog(@"[ PFKit ][ ERROR ] File remove failed.");
+            NSLog(@"[ %@ ][ ERROR ] File remove failed.", DEBUG_TARGET);
         }
     } else if (DEBUG_MODE) {
-        NSLog(@"[ PFKit ][ ERROR ] File does not exist.");
+        NSLog(@"[ %@ ][ ERROR ] File does not exist.", DEBUG_TARGET);
     }
 }
 
 //调试模式
-+ (void)debugMode:(BOOL)openOrNot
++ (void)debugMode:(BOOL)openOrNot debugTarget:(NSString *)target
 {
     DEBUG_MODE = openOrNot;
+    DEBUG_TARGET = target;
 }
 
 #pragma mark - Private Methods

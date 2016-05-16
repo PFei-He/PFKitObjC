@@ -48,4 +48,13 @@
  */
 + (void)debugMode:(BOOL)openOrNot;
 
+/**
+ *  @brief 调试模式
+ *  @note 无
+ *  @param openOrNot: 是否打开调试模式
+ *  @param target: 调试目标
+ *  @return 无
+ */
++ (void)debugMode:(BOOL)openOrNot debugTarget:(NSString *)target;
+
 @end
