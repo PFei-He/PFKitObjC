@@ -110,7 +110,7 @@ static NSString *DEBUG_TARGET = @"";
     if (![JSON isKindOfClass:[NSDictionary class]] && ![JSON isKindOfClass:[NSData class]]) {
         if (DEBUG_MODE) {
             NSLog(@"[ %@ ][ ERROR ] The JSON object must be type of dictionary or data.", DEBUG_TARGET);
-            NSLog(@"[ %@ ][ ERROR ] class: %@", DEBUG_TARGET, [self classForCoder]);
+            NSLog(@"[ %@ ][ ERROR ] Class: %@.", DEBUG_TARGET, [self classForCoder]);
         }
         return;
     } else if ([JSON isKindOfClass:[NSData class]]) {
@@ -134,7 +134,7 @@ static NSString *DEBUG_TARGET = @"";
     if (![XML isKindOfClass:[NSString class]] && ![XML isKindOfClass:[NSData class]]) {
         if (DEBUG_MODE) {
             NSLog(@"[ %@ ][ ERROR ] The XML object must be type of string or data.", DEBUG_TARGET);
-            NSLog(@"[ %@ ][ ERROR ] class: %@", DEBUG_TARGET, [self classForCoder]);
+            NSLog(@"[ %@ ][ ERROR ] Class: %@.", DEBUG_TARGET, [self classForCoder]);
         }
         return;
     } else if ([XML isKindOfClass:[NSString class]]) {
@@ -148,7 +148,7 @@ static NSString *DEBUG_TARGET = @"";
         self.JSON = self.array[0];
     } else if (DEBUG_MODE) {
         NSLog(@"[ %@ ][ ERROR ] XML data can't be parse.", DEBUG_TARGET);
-        NSLog(@"[ %@ ][ ERROR ] class: %@", DEBUG_TARGET, [self classForCoder]);
+        NSLog(@"[ %@ ][ ERROR ] Class: %@.", DEBUG_TARGET, [self classForCoder]);
     }
 }
 
@@ -158,11 +158,11 @@ static NSString *DEBUG_TARGET = @"";
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key
 {
     if (DEBUG_MODE) {
-        NSLog(@"[ %@ ][ ERROR ] found undefined key when parsing.", DEBUG_TARGET);
-        NSLog(@"[ %@ ][ ERROR ] class: %@", DEBUG_TARGET, [self classForCoder]);
-        NSLog(@"[ %@ ][ ERROR ] key: %@", DEBUG_TARGET, key);
-        NSLog(@"[ %@ ][ ERROR ] type: %@", DEBUG_TARGET, [value classForCoder]);
-        NSLog(@"[ %@ ][ ERROR ] value: %@", DEBUG_TARGET, value);
+        NSLog(@"[ %@ ][ ERROR ] Found undefined key when parsing.", DEBUG_TARGET);
+        NSLog(@"[ %@ ][ ERROR ] Class: %@.", DEBUG_TARGET, [self classForCoder]);
+        NSLog(@"[ %@ ][ ERROR ] Key: %@.", DEBUG_TARGET, key);
+        NSLog(@"[ %@ ][ ERROR ] Type: %@.", DEBUG_TARGET, [value classForCoder]);
+        NSLog(@"[ %@ ][ ERROR ] Value: %@.", DEBUG_TARGET, value);
     }
 }
 

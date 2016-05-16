@@ -54,6 +54,7 @@ static NSString *DEBUG_TARGET = @"";
         }
     } else if (DEBUG_MODE) {
         NSLog(@"[ %@ ][ ERROR ] File exists.", DEBUG_TARGET);
+        NSLog(@"[ %@ ][ DEBUG ] File path: %@.", DEBUG_TARGET, path);
     }
 }
 
@@ -73,6 +74,7 @@ static NSString *DEBUG_TARGET = @"";
         }
     } else if (DEBUG_MODE) {
         NSLog(@"[ %@ ][ ERROR ] File exists.", DEBUG_TARGET);
+        NSLog(@"[ %@ ][ DEBUG ] File path: %@.", DEBUG_TARGET, path);
     }
 }
 
