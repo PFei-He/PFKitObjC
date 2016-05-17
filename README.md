@@ -9,7 +9,7 @@
 
 版本 Version
 ---
-0.0.6
+0.0.7
 
 说明 Detail
 ---
@@ -40,7 +40,7 @@
 ```
 target 'YourTarget' do
     platform:ios, '7.0'
-    pod 'PFKitObjC', '~> 0.0.6'
+    pod 'PFKitObjC', '~> 0.0.7'
 end
 ```
 
@@ -54,7 +54,7 @@ end
 Swift
 ---
 `PFKit`提供了`Swift`的版本以便使用。[PFKitSwift](https://github.com/PFei-He/PFKitSwift) <br>
-`PFKit`also provides`Swift`version.[PFKitSwift](https://github.com/PFei-He/PFKitSwift)
+`PFKit`also provides`Swift`version. [PFKitSwift](https://github.com/PFei-He/PFKitSwift)
  
 许可证 LICENSE
 ---
