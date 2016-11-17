@@ -1,21 +1,19 @@
-[PFKit](https://github.com/PFei-He/PFKitObjC)
+ [PFKit](https://github.com/PFei-He/PFKitObjC)
 ===
 
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://raw.githubusercontent.com/PFei-He/PFKitObjC/master/LICENSE)
 [![Support](https://img.shields.io/badge/support-iOS%207%2B%20-blue.svg?style=flat)](https://www.apple.com/nl/ios/)
 [![Cocoapods Compatible](https://img.shields.io/cocoapods/v/PFKitObjC.svg)](https://img.shields.io/cocoapods/v/PFKitObjC.svg)
- 
-[中文介绍](https://github.com/PFei-He/PFKitObjC/blob/master/README-CN.md)
 
-PFKit is a simple iOS components.
+PFKit是一款简易的iOS组件包。
 
-PFKit is still in development, welcome to improve the project together.
+项目仍在开发中，欢迎一起完善这个项目。
 
-Version
+版本
 ---
 0.0.8
 
-Architecture
+类库结构
 ---
 #### Catagory
 * `NSString+PFKit`
@@ -27,32 +25,32 @@ Architecture
 #### Framework
 * `PFFile`
 * `PFModel`
- 
+
 #### Tool
 * `PFQRCode`
 * `PFScanner`
- 
+
 #### Other
 * `PFKit`
 
-Installation with CocoaPods
+使用CocoaPods
 ---
 ```
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '7.0'
- 
+
 target 'YourTarget' do
     pod 'PFKitObjC', '~> 0.0.8'
 end
 ```
 
-Example
+范例
 ---
 #### PFQRCode
 ```objective-c
 UIImage *image = [PFQRCode createWithString:@"1234567" codeSide:50];
 ```
- 
+
 #### PFModel
 ```objective-c
 //JSON
@@ -72,7 +70,7 @@ UIImage *image = [PFQRCode createWithString:@"1234567" codeSide:50];
 ```objective-c
 //Model
 @interface Person : PFModel
- 
+
 @property (copy, nonatomic)     NSString        *name;
 @property (strong, nonatomic)   NSNumber        *age;
 @property (copy, nonatomic)     NSString        *sex;
@@ -80,7 +78,7 @@ UIImage *image = [PFQRCode createWithString:@"1234567" codeSide:50];
 @property (strong, nonatomic)   NSArray         *address;
 @property (strong, nonatomic)   NSNumber        *height;
 @property (strong, nonatomic)   NSNumber        *weight;
- 
+
 @end
 ```
 ```objective-c
@@ -88,11 +86,11 @@ UIImage *image = [PFQRCode createWithString:@"1234567" codeSide:50];
 Person *person = [Person modelWithJSON:JSONData];
 NSLog(@"%@", person.name);
 ```
- 
+
 Swift
 ---
-`PFKit`also provides`Swift`version. ([PFKitSwift](https://github.com/PFei-He/PFKitSwift))
- 
+`PFKit`提供了`Swift`的版本以便使用。([PFKitSwift](https://github.com/PFei-He/PFKitSwift))
+
 许可证 LICENSE
 ---
-`PFKit` is released under the MIT license, see [LICENSE](https://raw.githubusercontent.com/PFei-He/PFKitObjC/master/LICENSE) for details.
+`PFKit`使用 MIT 许可证，详情见 [LICENSE](https://raw.githubusercontent.com/PFei-He/PFKitObjC/master/LICENSE) 文件。
