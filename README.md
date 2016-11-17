@@ -93,6 +93,6 @@ Swift
 ---
 `PFKit`also provides`Swift`version. ([PFKitSwift](https://github.com/PFei-He/PFKitSwift))
  
-许可证 LICENSE
+LICENSE
 ---
 `PFKit` is released under the MIT license, see [LICENSE](https://raw.githubusercontent.com/PFei-He/PFKitObjC/master/LICENSE) for details.

@@ -91,6 +91,6 @@ Swift
 ---
 `PFKit`提供了`Swift`的版本以便使用。([PFKitSwift](https://github.com/PFei-He/PFKitSwift))
 
-许可证 LICENSE
+许可证
 ---
 `PFKit`使用 MIT 许可证，详情见 [LICENSE](https://raw.githubusercontent.com/PFei-He/PFKitObjC/master/LICENSE) 文件。
