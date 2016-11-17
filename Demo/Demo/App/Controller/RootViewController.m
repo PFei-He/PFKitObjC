@@ -42,6 +42,9 @@
     
     //生成二维码
     self.imageView.image = [PFQRCode createWithString:[Person sharedInstance].code codeSize:self.imageView.width iconNamed:@"Custom Figure.jpg"];
+    
+    Sports *sport = [Sports modelWithJSON:[Person sharedInstance].sport[0]];
+    NSLog(@"%@", sport.one);
 }
 
 - (void)didReceiveMemoryWarning

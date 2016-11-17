@@ -33,8 +33,6 @@
 
 ///调试模式
 static BOOL DEBUG_MODE = NO;
-///调试目标
-static NSString *DEBUG_TARGET = @"";
 
 @interface PFScanner () <AVCaptureMetadataOutputObjectsDelegate>
 
@@ -84,7 +82,7 @@ static NSString *DEBUG_TARGET = @"";
     AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
     
     if (error && DEBUG_MODE) {
-        NSLog(@"[ %@ ][ ERROR ] Device input error.", DEBUG_TARGET);
+        NSLog(@"[ ERROR ] Device input error.");
     }
     
     //设置输出的代理
@@ -131,10 +129,9 @@ static NSString *DEBUG_TARGET = @"";
 }
 
 //调试模式
-+ (void)debugMode:(BOOL)openOrNot debugTarget:(NSString *)target
++ (void)debugMode:(BOOL)openOrNot
 {
     DEBUG_MODE = openOrNot;
-    DEBUG_TARGET = target;
 }
 
 #pragma mark - AVCaptureMetadataOutputObjectsDelegate Methods

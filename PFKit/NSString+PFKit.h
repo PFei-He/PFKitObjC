@@ -34,56 +34,44 @@
 
 /**
  *  @brief 判断是否QQ号码
- *  @note 无
- *  @param 无
  *  @return 判断结果
  */
 - (BOOL)isQQ;
 
 /**
  *  @brief 判断是否邮箱地址
- *  @note 无
- *  @param 无
  *  @return 判断结果
  */
 - (BOOL)isEmail;
 
 /**
  *  @brief 判断是否URL
- *  @note 无
- *  @param 无
  *  @return 判断结果
  */
 - (BOOL)isURL;
 
 /**
  *  @brief 判断是否手机号码
- *  @note 无
- *  @param 无
  *  @return 判断结果
  */
 - (BOOL)isMobilePhoneNumber;
 
 /**
  *  @brief 判断是否ip地址
- *  @note 无
- *  @param 无
  *  @return 判断结果
  */
 - (BOOL)isIPAddress;
 
 /**
  *  @brief 匹配邮箱地址
- *  @note 无
- *  @param string: 需要匹配的字符串
+ *  @param string 需要匹配的字符串
  *  @return 寻找出的邮箱地址
  */
 - (NSString *)matchesEmail:(NSString *)string;
 
 /**
  *  @brief 匹配URL
- *  @note 无
- *  @param string: 需要匹配的字符串
+ *  @param string 需要匹配的字符串
  *  @return 寻找出的URL
  */
 - (NSString *)matchesURL:(NSString *)string;
@@ -94,16 +82,13 @@
 
 /**
  *  @brief 本地化
- *  @note 无
- *  @param 无
  *  @return 当前语言环境对应的值
  */
 - (NSString *)localized;
 
 /**
  *  @brief 本地化带注释
- *  @note 无
- *  @param comment: 本地化文件中的注释
+ *  @param comment 本地化文件中的注释
  *  @return 当前语言环境对应的值
  */
 - (NSString *)localizedWithComment:(NSString *)comment;

@@ -39,7 +39,7 @@
 + (void)debugVersion
 {
     NSLog(@"[ PFKit ][ INFO ] THANK YOU FOR USING !!");
-    NSLog(@"[ PFKit ][ INFO ] Current version: 0.0.7.");
+    NSLog(@"[ PFKit ][ INFO ] Current version: 0.0.8.");
     NSLog(@"[ PFKit ][ INFO ] Programming language: Objective-C.");
     NSLog(@"[ PFKit ][ INFO ] Open source license: MIT.");
     NSLog(@"[ PFKit ][ INFO ] Join me: https://github.com/PFei-He/PFKitObjC.");
@@ -48,17 +48,9 @@
 //调试模式
 + (void)debugMode:(BOOL)openOrNot
 {
-    [PFFile debugMode:openOrNot debugTarget:@"PFKit"];
-    [PFModel debugMode:openOrNot debugTarget:@"PFKit"];
-    [PFScanner debugMode:openOrNot debugTarget:@"PFKit"];
-}
-
-//调试模式
-+ (void)debugMode:(BOOL)openOrNot debugTarget:(NSString *)target
-{
-    [PFFile debugMode:openOrNot debugTarget:target];
-    [PFModel debugMode:openOrNot debugTarget:target];
-    [PFScanner debugMode:openOrNot debugTarget:target];
+    [PFFile debugMode:openOrNot];
+    [PFModel debugMode:openOrNot];
+    [PFScanner debugMode:openOrNot];
 }
 
 @end

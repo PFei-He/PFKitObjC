@@ -34,19 +34,17 @@
 
 /**
  *  @brief 生成二维码
- *  @note 无
- *  @param string: 用于生成二维码的字符串
- *  @param size: 二维码的尺寸
+ *  @param string 用于生成二维码的字符串
+ *  @param size 二维码的尺寸
  *  @return 二维码
  */
 + (UIImage *)createWithString:(NSString *)string codeSize:(CGFloat)size;
 
 /**
  *  @brief 生成定制二维码
- *  @note 无
- *  @param string: 用于生成二维码的字符串
- *  @param size: 二维码的尺寸
- *  @param name: 放置于二维码中间的定制图
+ *  @param string 用于生成二维码的字符串
+ *  @param size 二维码的尺寸
+ *  @param name 放置于二维码中间的定制图
  *  @return 二维码
  */
 + (UIImage *)createWithString:(NSString *)string codeSize:(CGFloat)size iconNamed:(NSString *)name;

@@ -35,24 +35,22 @@
 /**
  *  @brief 创建文件
  *  @note 文件存放于沙盒中的Documents文件夹中
- *  @param fileName: 文件名
- *  @return 无
+ *  @param fileName 文件名
  */
 + (void)createWithName:(NSString *)fileName;
 
 /**
  *  @brief 创建文件
  *  @note 文件存放于沙盒中的Documents文件夹中
- *  @param fileName: 文件名
- *  @param params: 写入的参数
- *  @return 无
+ *  @param fileName 文件名
+ *  @param params 写入的参数
  */
 + (void)createWithName:(NSString *)fileName params:(NSDictionary *)params;
 
 /**
  *  @brief 读取Dictionary类型文件
  *  @note 文件存放于沙盒中的Documents文件夹中
- *  @param fileName: 文件名
+ *  @param fileName 文件名
  *  @return 文件中的数据
  */
 + (NSDictionary *)readDictionaryWithName:(NSString *)fileName;
@@ -60,7 +58,7 @@
 /**
  *  @brief 读取String类型文件
  *  @note 文件存放于沙盒中的Documents文件夹中
- *  @param fileName: 文件名
+ *  @param fileName 文件名
  *  @return 文件中的数据
  */
 + (NSString *)readStringWithName:(NSString *)fileName;
@@ -68,7 +66,7 @@
 /**
  *  @brief 读取JSON类型文件
  *  @note 文件存放于main bundle中
- *  @param fileName: 文件名
+ *  @param fileName 文件名
  *  @return 文件中的数据
  */
 + (NSData *)readJSONWithName:(NSString *)fileName;
@@ -76,7 +74,7 @@
 /**
  *  @brief 读取XML类型文件
  *  @note 文件存放于main bundle中
- *  @param fileName: 文件名
+ *  @param fileName 文件名
  *  @return 文件中的数据
  */
 + (NSData *)readXMLWithName:(NSString *)fileName;
@@ -84,7 +82,7 @@
 /**
  *  @brief 读取文件的路径
  *  @note 文件存放于沙盒中的Documents文件夹中
- *  @param fileName: 文件名
+ *  @param fileName 文件名
  *  @return 文件路径
  */
 + (NSString *)readPathWithName:(NSString *)fileName;
@@ -92,8 +90,8 @@
 /**
  *  @brief 写入文件
  *  @note 文件存放于沙盒中的Documents文件夹中
- *  @param fileName: 文件名
- *  @param params: 写入到文件的参数
+ *  @param fileName 文件名
+ *  @param params 写入到文件的参数
  *  @return 写入结果
  */
 + (BOOL)modifyWithName:(NSString *)fileName setParams:(NSDictionary *)params;
@@ -101,8 +99,8 @@
 /**
  *  @brief 添加参数
  *  @note 文件存放于沙盒中的Documents文件夹中
- *  @param fileName: 文件名
- *  @param params: 添加到文件的参数
+ *  @param fileName 文件名
+ *  @param params 添加到文件的参数
  *  @return 写入结果
  */
 + (BOOL)modifyWithName:(NSString *)fileName addParams:(NSDictionary *)params;
@@ -110,18 +108,15 @@
 /**
  *  @brief 删除文件
  *  @note 文件存放于沙盒中的Documents文件夹中
- *  @param fileName: 文件名
- *  @return 无
+ *  @param fileName 文件名
  */
 + (void)removeWithName:(NSString *)fileName;
 
 /**
  *  @brief 调试模式
  *  @note 无
- *  @param openOrNot: 是否打开调试模式
- *  @param target: 调试目标
- *  @return 无
+ *  @param openOrNot 是否打开调试模式
  */
-+ (void)debugMode:(BOOL)openOrNot debugTarget:(NSString *)target;
++ (void)debugMode:(BOOL)openOrNot;
 
 @end

@@ -70,6 +70,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		05AC4BD41DDD850A00A25A39 /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				4565F5D51CE45D2C00AA978E /* PFQRCode.h */,
+				4565F5D61CE45D2C00AA978E /* PFQRCode.m */,
+				4565F61A1CE486E800AA978E /* PFScanner.h */,
+				4565F61B1CE486E800AA978E /* PFScanner.m */,
+			);
+			name = Tool;
+			sourceTree = "<group>";
+		};
 		456225AB1BF579F9008202A7 = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +172,7 @@
 				4565F5D11CE45C1F00AA978E /* Catagory */,
 				4565F5D01CE45C1800AA978E /* Debug */,
 				4565F5CF1CE45C0F00AA978E /* Framework */,
+				05AC4BD41DDD850A00A25A39 /* Tool */,
 				4565F5C91CE45C0A00AA978E /* PFKit.h */,
 			);
 			name = PFKit;
@@ -175,10 +187,6 @@
 				4565F5C81CE45C0A00AA978E /* PFFile.m */,
 				4565F5CA1CE45C0A00AA978E /* PFModel.h */,
 				4565F5CB1CE45C0A00AA978E /* PFModel.m */,
-				4565F5D51CE45D2C00AA978E /* PFQRCode.h */,
-				4565F5D61CE45D2C00AA978E /* PFQRCode.m */,
-				4565F61A1CE486E800AA978E /* PFScanner.h */,
-				4565F61B1CE486E800AA978E /* PFScanner.m */,
 			);
 			name = Framework;
 			sourceTree = "<group>";

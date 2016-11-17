@@ -37,8 +37,7 @@
 /**
  *  @brief 扫描完成
  *  @note 无
- *  @param string: 扫描结果转换成的字符串
- *  @return 无
+ *  @param string 扫描结果转换成的字符串
  */
 - (void)scanner:(PFScanner *)scanner captureCompletedWithString:(NSString *)string;
 
@@ -55,18 +54,15 @@
 /**
  *  @brief 创建扫描器
  *  @note 无
- *  @param view: 添加扫描器的视图
- *  @return 无
+ *  @param view 添加扫描器的视图
  */
 - (void)createInView:(UIView *)view;
 
 /**
  *  @brief 调试模式
  *  @note 无
- *  @param openOrNot: 是否打开调试模式
- *  @param target: 调试目标
- *  @return 无
+ *  @param openOrNot 是否打开调试模式
  */
-+ (void)debugMode:(BOOL)openOrNot debugTarget:(NSString *)target;
++ (void)debugMode:(BOOL)openOrNot;
 
 @end

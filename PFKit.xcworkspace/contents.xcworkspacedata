@@ -48,6 +48,10 @@
          <FileRef
             location = "group:PFKit/PFModel.m">
          </FileRef>
+      </Group>
+      <Group
+         location = "container:"
+         name = "Tool">
          <FileRef
             location = "group:PFKit/PFQRCode.h">
          </FileRef>

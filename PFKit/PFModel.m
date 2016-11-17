@@ -29,31 +29,275 @@
 //
 
 #import "PFModel.h"
+
 #import <objc/runtime.h>
 
 ///调试模式
 static BOOL DEBUG_MODE = NO;
-///调试目标
-static NSString *DEBUG_TARGET = @"";
 
 @interface PFModel () <NSXMLParserDelegate>
 
+///未声明属性
+@property (strong, nonnull) NSMutableDictionary *undefinedProperty;
 ///节点
-@property (strong, nonatomic) NSMutableArray    *array;
-///节点中的值
-@property (strong, nonatomic) NSMutableString   *string;
+@property (strong, nonatomic) NSMutableArray    *elements;
+///节点名
+@property (strong, nonatomic) NSMutableString   *elementName;
+
+@end
+
+typedef NS_ENUM(NSUInteger, PFModelParserLogMsg) {
+    PFModelParserLogMsgIsNotDataOrDictionary,
+    PFModelParserLogMsgIsNotDataOrString,
+    PFModelParserLogMsgParseJSONFailure,
+    PFModelParserLogMsgParseXMLFailure,
+    PFModelParserLogMsgFoundUndefinedKey,
+    PFModelParserLogMsgPropertyConverted,
+};
+
+@implementation PFModel (Log)
+
+#pragma mark - Private Methods (Log)
+
+- (void)logMsg:(PFModelParserLogMsg)msg
+{
+    [self logMsg:msg otherInfo:nil];
+}
+
+- (void)logMsg:(PFModelParserLogMsg)msg otherInfo:(NSDictionary *)info
+{
+    if (!DEBUG_MODE) { //调试模式被关闭
+        return;
+    }
+    
+    if (msg == PFModelParserLogMsgIsNotDataOrDictionary) {
+        NSLog(@"[ ERROR ] The JSON object must be type of 'NSDictionary' or 'NSData'.");
+        NSLog(@"[ -> ][ CLASS ] %@", [self classForCoder]);
+    } else if (msg == PFModelParserLogMsgIsNotDataOrString) {
+        NSLog(@"[ ERROR ] The XML object must be type of 'NSString' or 'NSData'.");
+        NSLog(@"[ -> ][ CLASS ] %@", [self classForCoder]);
+    } else if (msg == PFModelParserLogMsgParseJSONFailure) {
+        NSLog(@"[ ERROR ] The JSON object can't be parsed.");
+        NSLog(@"[ -> ][ CLASS ] %@", [self classForCoder]);
+    } else if (msg == PFModelParserLogMsgParseXMLFailure) {
+        NSLog(@"[ ERROR ] The XML object can't be parsed.");
+        NSLog(@"[ -> ][ CLASS ] %@", [self classForCoder]);
+    } else if (msg == PFModelParserLogMsgFoundUndefinedKey) {
+        NSLog(@"[ WARN ] Found undefined key when parsing.");
+        NSLog(@"[ -> ][ CLASS ] %@", [self classForCoder]);
+        NSLog(@"[ -> ][ -> ][ KEY ] %@", info[@"PARSER_JSON_UNDEFINED_KEY"]);
+        NSLog(@"[ -> ][ -> ][ TYPE ] %@", info[@"PARSER_JSON_UNDEFINED_TYPE"]);
+        NSLog(@"[ -> ][ -> ][ VALUE ] %@", info[@"PARSER_JSON_UNDEFINED_VALUE"]);
+    } else if (msg == PFModelParserLogMsgPropertyConverted) {
+        NSLog(@"[ INFO ] Property name converted.");
+        NSLog(@"[ -> ][ CLASS ] %@", [self classForCoder]);
+        NSLog(@"[ -> ][ -> ][ BEFORE ] %@", info[@"MODEL_PROPERTY_BEFORE_RENAME"]);
+        NSLog(@"[ -> ][ -> ][ AFTER ] %@", info[@"MODEL_PROPERTY_AFTER_RENAME"]);
+    }
+}
+
+@end
+
+@implementation PFModel (Property)
+
+#pragma mark - Private Methods (Property)
+
+//获取属性列表
+- (NSArray *)getPropertyList:(Class)cls
+{
+    unsigned int propertyCount = 0;
+    NSMutableArray *propertyArray = [NSMutableArray array];
+    objc_property_t *propertyList = class_copyPropertyList(cls, &propertyCount);
+    
+    if (propertyList != NULL) {
+        for (unsigned int i = 0; i < propertyCount; i++) {
+            //获取属性名并存入到数组中
+            NSString *key = [NSString stringWithUTF8String:property_getName(propertyList[i])];
+            [propertyArray addObject:key];
+        }
+    }
+    //释放对象
+    free(propertyList);
+    
+    return propertyArray;
+}
+
+@end
+
+@implementation PFModel (JSON)
+
+#pragma mark - Private Methods (JSON)
+
+///解析JSON
+- (void)parseJSON:(id)JSON
+{
+    if ([JSON isKindOfClass:[NSDictionary class]]) {
+        //将键值设置为属性（解析JSON）
+        [self setValuesForKeysWithDictionary:JSON];
+        
+        //更改未声明的属性的属性名
+        [self undefinedKeyConvert];
+        
+        //剩余的未声明的属性
+        [self undefinedKey];
+    } else if ([JSON isKindOfClass:[NSData class]]) {
+        NSError *error;
+        JSON = [NSJSONSerialization JSONObjectWithData:JSON options:NSJSONReadingAllowFragments error:&error];
+        if (error) {
+            [self logMsg:PFModelParserLogMsgParseJSONFailure];
+        } else {
+            
+            //将键值设置为属性（解析JSON）
+            [self setValuesForKeysWithDictionary:JSON];
+            
+            //更改未声明的属性的属性名
+            [self undefinedKeyConvert];
+            
+            //剩余的未声明的属性
+            [self undefinedKey];
+        }
+    } else {
+        [self logMsg:PFModelParserLogMsgIsNotDataOrDictionary];
+    }
+}
+
+//获取未被声明的键值
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key
+{
+    if (!self.undefinedProperty) {
+        self.undefinedProperty = [NSMutableDictionary dictionary];
+    }
+    [self.undefinedProperty setValue:value forKey:key];
+}
+
+///更改未声明的属性的属性名
+- (void)undefinedKeyConvert
+{
+    __weak __typeof__(self) weakSelf = self;
+    [self.undefinedProperty enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        __typeof__(weakSelf) self = weakSelf;
+        if ([self propertyConvert]) {//转换属性名
+            NSDictionary *conversionTable = [self propertyConvert];
+            for (int i=0; i < conversionTable.count; i++) {
+                NSString *beforeRename = conversionTable.allKeys[i];
+                NSString *afterRename = conversionTable.allValues[i];
+                if ([key isEqualToString:beforeRename]) {
+                    [self setValue:obj forKeyPath:afterRename];
+                    [self.undefinedProperty removeObjectForKey:key];
+                    [self logMsg:PFModelParserLogMsgPropertyConverted otherInfo:@{@"MODEL_PROPERTY_BEFORE_RENAME": beforeRename, @"MODEL_PROPERTY_AFTER_RENAME": afterRename}];
+                }
+            }
+        }
+    }];
+}
+
+///剩余的未声明的属性
+- (void)undefinedKey
+{
+    __weak __typeof__(self) weakSelf = self;
+    [self.undefinedProperty enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        __typeof__(weakSelf) self = weakSelf;
+        [self logMsg:PFModelParserLogMsgFoundUndefinedKey otherInfo:@{@"PARSER_JSON_UNDEFINED_KEY": key, @"PARSER_JSON_UNDEFINED_TYPE": [obj classForCoder], @"PARSER_JSON_UNDEFINED_VALUE": obj}];
+    }];
+}
+
+@end
+
+@implementation PFModel (XML)
+
+#pragma mark - Private Methods (XML)
+
+///解析XML
+- (void)parseXML:(id)XML
+{
+    //节点
+    if (!self.elements) self.elements = [[NSMutableArray alloc] init];
+    [self.elements addObject:[NSMutableDictionary dictionary]];
+    
+    //节点名
+    if (!self.elementName) self.elementName = [[NSMutableString alloc] init];
+    
+    //判断数据类型
+    if ([XML isKindOfClass:[NSData class]]) {
+        if ([self XMLParser:XML]) { //解析XML
+            self.JSON = self.elements[0];
+        } else {
+            [self logMsg:PFModelParserLogMsgParseXMLFailure];
+        }
+    } else if ([XML isKindOfClass:[NSString class]]) {
+        XML = [XML dataUsingEncoding:NSUTF8StringEncoding];
+        if ([self XMLParser:XML]) { //解析XML
+            self.JSON = self.elements[0];
+        } else {
+            [self logMsg:PFModelParserLogMsgParseXMLFailure];
+        }
+    } else {
+        [self logMsg:PFModelParserLogMsgIsNotDataOrString];
+    }
+}
+
+- (BOOL)XMLParser:(id)XML
+{
+    //XML解析器
+    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:XML];
+    parser.delegate = self;
+    return [parser parse];
+}
+
+#pragma mark - NSXMLParserDelegate Methods
+
+//读取节点头
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary<NSString *,NSString *> *)attributeDict
+{
+    //父节点
+    NSMutableDictionary *parentElement = [self.elements lastObject];
+    
+    //子节点
+    NSMutableDictionary *childElement = [NSMutableDictionary dictionary];
+    [childElement addEntriesFromDictionary:attributeDict];
+    
+    //将节点转为字典的键值
+    id value = parentElement[elementName];
+    if (value) {
+        NSMutableArray *array = nil;
+        if ([value isKindOfClass:[NSMutableArray class]]) {
+            array = (NSMutableArray *)value;
+        } else {
+            array = [NSMutableArray array];
+            [array addObject:value];
+            [parentElement setObject:array forKey:elementName];
+        }
+        [array addObject:childElement];
+    } else {
+        [parentElement setObject:childElement forKey:elementName];
+    }
+    [self.elements addObject:childElement];
+}
+
+//读取节点尾
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
+{
+    NSMutableDictionary *dictionary = self.elements.lastObject;
+    
+    if (self.elementName.length > 0) { //剪切字符串，去掉空白和换行
+        NSString *string = [self.elementName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        [dictionary setObject:string forKey:elementName];
+        self.elementName = [NSMutableString new];
+    }
+    [self.elements removeLastObject];
+}
+
+//读取节点中的值
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
+{
+    [self.elementName appendString:string];
+}
 
 @end
 
 @implementation PFModel
 
 #pragma mark - Life Cycle
-
-//初始化
-+ (instancetype)model
-{
-    return [[self alloc] init];
-}
 
 //初始化
 - (instancetype)initWithJSON:(id)JSON
@@ -85,7 +329,13 @@ static NSString *DEBUG_TARGET = @"";
     return model;
 }
 
-#pragma mark - Property Methods
+//初始化
++ (instancetype)model
+{
+    return [[self alloc] init];
+}
+
+#pragma mark - Setter/Getter Methods
 
 //JSON数据
 - (void)setJSON:(id)JSON
@@ -101,164 +351,36 @@ static NSString *DEBUG_TARGET = @"";
     [self parseXML:XML];
 }
 
-#pragma mark - Private Methods
-
-///解析JSON
-- (void)parseJSON:(id)JSON
-{
-    //判断数据类型
-    if (![JSON isKindOfClass:[NSDictionary class]] && ![JSON isKindOfClass:[NSData class]]) {
-        if (DEBUG_MODE) {
-            NSLog(@"[ %@ ][ ERROR ] The JSON object must be type of dictionary or data.", DEBUG_TARGET);
-            NSLog(@"[ %@ ][ ERROR ] Class: %@.", DEBUG_TARGET, [self classForCoder]);
-        }
-        return;
-    } else if ([JSON isKindOfClass:[NSData class]]) {
-        NSError *error = nil;
-        JSON = [NSJSONSerialization JSONObjectWithData:JSON options:NSJSONReadingAllowFragments error:&error];
-        if (error && DEBUG_MODE) {
-            NSLog(@"[ %@ ][ ERROR ] The JSON object can't be parsed.", DEBUG_TARGET);
-            NSLog(@"[ %@ ][ ERROR ] Class: %@.", DEBUG_TARGET, [self classForCoder]);
-        }
-    }
-    //将键值设置为属性（解析JSON）
-    [self setValuesForKeysWithDictionary:JSON];
-}
-
-///解析XML
-- (void)parseXML:(id)XML
-{
-    //节点
-    self.array = [[NSMutableArray alloc] init];
-    [self.array addObject:[NSMutableDictionary dictionary]];
-    
-    //节点中的值
-    self.string = [[NSMutableString alloc] init];
-    
-    //判断数据类型
-    if (![XML isKindOfClass:[NSString class]] && ![XML isKindOfClass:[NSData class]]) {
-        if (DEBUG_MODE) {
-            NSLog(@"[ %@ ][ ERROR ] The XML object must be type of string or data.", DEBUG_TARGET);
-            NSLog(@"[ %@ ][ ERROR ] Class: %@.", DEBUG_TARGET, [self classForCoder]);
-        }
-        return;
-    } else if ([XML isKindOfClass:[NSString class]]) {
-        XML = [XML dataUsingEncoding:NSUTF8StringEncoding];
-    }
-    
-    //XML解析器
-    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:XML];
-    parser.delegate = self;
-    if ([parser parse]) {//解析XML
-        self.JSON = self.array[0];
-    } else if (DEBUG_MODE) {
-        NSLog(@"[ %@ ][ ERROR ] The XML object can't be parsed.", DEBUG_TARGET);
-        NSLog(@"[ %@ ][ ERROR ] Class: %@.", DEBUG_TARGET, [self classForCoder]);
-    }
-}
-
 #pragma mark - Public Methods
 
-//获取未被声明的键值
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key
+//属性转换
+- (NSDictionary *)propertyConvert
 {
-    if (DEBUG_MODE) {
-        NSLog(@"[ %@ ][ ERROR ] Found undefined key when parsing.", DEBUG_TARGET);
-        NSLog(@"[ %@ ][ ERROR ] Class: %@.", DEBUG_TARGET, [self classForCoder]);
-        NSLog(@"[ %@ ][ ERROR ] Key: %@.", DEBUG_TARGET, key);
-        NSLog(@"[ %@ ][ ERROR ] Type: %@.", DEBUG_TARGET, [value classForCoder]);
-        NSLog(@"[ %@ ][ ERROR ] Value: %@.", DEBUG_TARGET, value);
-    }
+    return nil;
 }
 
 //创建JSON（将键值转化为字典）
 - (NSDictionary *)createJSON
 {
-    //获取属性列表
-    unsigned int count = 0;
-    objc_property_t *list = class_copyPropertyList([self classForCoder], &count);
-    NSMutableArray *array = [NSMutableArray array];
-    if (list != NULL) {
-        for (int i = 0; i < count; i++) {
-            //获取属性名
-            NSString *key = [NSString stringWithUTF8String:property_getName(list[i])];
-            
-            //将属性放入到数组中
-            [array addObject:key];
-        }
-    }
-    //释放对象
-    free(list);
+    //获取类的所有属性
+    NSDictionary *propertyDictionary = [NSDictionary dictionaryWithDictionary:[self dictionaryWithValuesForKeys:[self getPropertyList:[self class]]]];
     
     //去除空值
-    NSDictionary *dictionary = [NSDictionary dictionaryWithDictionary:[self dictionaryWithValuesForKeys:array]];
     NSMutableDictionary *JSON = [NSMutableDictionary dictionary];
-    for (NSString *string in dictionary) {
-        if ([dictionary[string] isKindOfClass:[NSNull class]]) {
-            [JSON setObject:@"" forKey:string];
+    for (NSString *key in propertyDictionary) {
+        if ([propertyDictionary[key] isKindOfClass:[NSNull class]]) {
+            [JSON setObject:@"" forKey:key];
         } else {
-            [JSON setObject:dictionary[string] forKey:string];
+            [JSON setObject:propertyDictionary[key] forKey:key];
         }
     }
-    
-    //返回JSON对象
     return JSON;
 }
 
 //调试模式
-+ (void)debugMode:(BOOL)openOrNot debugTarget:(NSString *)target
++ (void)debugMode:(BOOL)openOrNot
 {
     DEBUG_MODE = openOrNot;
-    DEBUG_TARGET = target;
-}
-
-#pragma mark - NSXMLParserDelegate Methods
-
-//读取节点头
-- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary<NSString *,NSString *> *)attributeDict
-{
-    //父节点
-    NSMutableDictionary *parentDict = [self.array lastObject];
-    
-    //子节点
-    NSMutableDictionary *childDict = [NSMutableDictionary dictionary];
-    [childDict addEntriesFromDictionary:attributeDict];
-    
-    //将节点转为字典的键值
-    id value = parentDict[elementName];
-    if (value) {
-        NSMutableArray *array = nil;
-        if ([value isKindOfClass:[NSMutableArray class]]) {
-            array = (NSMutableArray *)value;
-        } else {
-            array = [NSMutableArray array];
-            [array addObject:value];
-            [parentDict setObject:array forKey:elementName];
-        }
-        [array addObject:childDict];
-    } else {
-        [parentDict setObject:childDict forKey:elementName];
-    }
-    [self.array addObject:childDict];
-}
-
-//读取节点尾
-- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
-{
-    NSMutableDictionary *dictionary = self.array.lastObject;
-    
-    if (self.string.length > 0) {//剪切字符串，去掉空白和换行
-        NSString *string = [self.string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        [dictionary setObject:string forKey:elementName];
-        self.string = [NSMutableString new];
-    }
-    [self.array removeLastObject];
-}
-
-//读取节点中的值
-- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
-{
-    [self.string appendString:string];
 }
 
 @end

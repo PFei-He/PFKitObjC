@@ -40,59 +40,56 @@
 
 /**
  *  @brief 初始化
- *  @note 无
- *  @param 无
- *  @return Model实例
- */
-+ (instancetype)model;
-
-/**
- *  @brief 初始化
- *  @note 无
- *  @param JSON: JSON数据
+ *  @param JSON JSON数据
  *  @return Model实例
  */
 - (instancetype)initWithJSON:(id)JSON;
 
 /**
  *  @brief 初始化
- *  @note 无
- *  @param JSON: JSON数据
+ *  @param JSON JSON数据
  *  @return Model实例
  */
 + (instancetype)modelWithJSON:(id)JSON;
 
 /**
  *  @brief 初始化
- *  @note 无
- *  @param XML: XML数据
+ *  @param XML XML数据
  *  @return Model实例
  */
 - (instancetype)initWithXML:(id)XML;
 
 /**
  *  @brief 初始化
- *  @note 无
- *  @param XML: XML数据
+ *  @param XML XML数据
  *  @return Model实例
  */
 + (instancetype)modelWithXML:(id)XML;
 
 /**
+ *  @brief 初始化
+ *  @return Model实例
+ */
++ (instancetype)model;
+
+/**
  *  @brief 创建JSON
  *  @note 将键值转化为字典
- *  @param 无
  *  @return 转化后JSON数据
  */
 - (NSDictionary *)createJSON;
 
 /**
- *  @brief 调试模式
- *  @note 无
- *  @param openOrNot: 是否打开调试模式
- *  @param target: 调试目标
- *  @return 无
+ *  @brief 更换属性名
+ *  @note 'key'：JSON的 '键'，'value'：MODEL的 '属性'
+ *  @return 更换的属性列表
  */
-+ (void)debugMode:(BOOL)openOrNot debugTarget:(NSString *)target;
+- (NSDictionary *)propertyConvert;
+
+/**
+ *  @brief 调试模式
+ *  @param openOrNot 是否打开调试模式
+ */
++ (void)debugMode:(BOOL)openOrNot;
 
 @end
