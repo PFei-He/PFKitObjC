@@ -39,7 +39,7 @@
 + (void)debugVersion
 {
     NSLog(@"[ PFKit ][ INFO ] THANK YOU FOR USING !!");
-    NSLog(@"[ PFKit ][ INFO ] Current version: 0.0.8.");
+    NSLog(@"[ PFKit ][ INFO ] Current version: 0.0.9.");
     NSLog(@"[ PFKit ][ INFO ] Programming language: Objective-C.");
     NSLog(@"[ PFKit ][ INFO ] Open source license: MIT.");
     NSLog(@"[ PFKit ][ INFO ] Join me: https://github.com/PFei-He/PFKitObjC.");

@@ -44,6 +44,7 @@ static BOOL DEBUG_MODE = NO;
 ///节点名
 @property (strong, nonatomic) NSMutableString   *elementName;
 
+
 @end
 
 typedef NS_ENUM(NSUInteger, PFModelParserLogMsg) {
@@ -83,7 +84,7 @@ typedef NS_ENUM(NSUInteger, PFModelParserLogMsg) {
         NSLog(@"[ ERROR ] The XML object can't be parsed.");
         NSLog(@"[ -> ][ CLASS ] %@", [self classForCoder]);
     } else if (msg == PFModelParserLogMsgFoundUndefinedKey) {
-        NSLog(@"[ WARN ] Found undefined key when parsing.");
+        NSLog(@"[ WARNING ] Found undefined key when parsing.");
         NSLog(@"[ -> ][ CLASS ] %@", [self classForCoder]);
         NSLog(@"[ -> ][ -> ][ KEY ] %@", info[@"PARSER_JSON_UNDEFINED_KEY"]);
         NSLog(@"[ -> ][ -> ][ TYPE ] %@", info[@"PARSER_JSON_UNDEFINED_TYPE"]);
@@ -95,6 +96,7 @@ typedef NS_ENUM(NSUInteger, PFModelParserLogMsg) {
         NSLog(@"[ -> ][ -> ][ AFTER ] %@", info[@"MODEL_PROPERTY_AFTER_RENAME"]);
     }
 }
+
 
 @end
 
@@ -121,6 +123,7 @@ typedef NS_ENUM(NSUInteger, PFModelParserLogMsg) {
     
     return propertyArray;
 }
+
 
 @end
 
@@ -201,6 +204,7 @@ typedef NS_ENUM(NSUInteger, PFModelParserLogMsg) {
     }];
 }
 
+
 @end
 
 @implementation PFModel (XML)
@@ -243,6 +247,7 @@ typedef NS_ENUM(NSUInteger, PFModelParserLogMsg) {
     parser.delegate = self;
     return [parser parse];
 }
+
 
 #pragma mark - NSXMLParserDelegate Methods
 
@@ -293,6 +298,7 @@ typedef NS_ENUM(NSUInteger, PFModelParserLogMsg) {
     [self.elementName appendString:string];
 }
 
+
 @end
 
 @implementation PFModel
@@ -309,9 +315,7 @@ typedef NS_ENUM(NSUInteger, PFModelParserLogMsg) {
 //初始化
 + (instancetype)modelWithJSON:(id)JSON
 {
-    PFModel *model = [[self alloc] init];
-    model.JSON = JSON;
-    return model;
+    return [[self alloc] initWithJSON:JSON];
 }
 
 //初始化
@@ -324,9 +328,7 @@ typedef NS_ENUM(NSUInteger, PFModelParserLogMsg) {
 //初始化
 + (instancetype)modelWithXML:(id)XML
 {
-    PFModel *model = [[self alloc] init];
-    model.XML = XML;
-    return model;
+    return [[self alloc] initWithXML:XML];
 }
 
 //初始化
@@ -334,6 +336,7 @@ typedef NS_ENUM(NSUInteger, PFModelParserLogMsg) {
 {
     return [[self alloc] init];
 }
+
 
 #pragma mark - Setter/Getter Methods
 
@@ -350,6 +353,7 @@ typedef NS_ENUM(NSUInteger, PFModelParserLogMsg) {
     _XML = XML;
     [self parseXML:XML];
 }
+
 
 #pragma mark - Public Methods
 
@@ -382,5 +386,6 @@ typedef NS_ENUM(NSUInteger, PFModelParserLogMsg) {
 {
     DEBUG_MODE = openOrNot;
 }
+
 
 @end
